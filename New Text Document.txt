@@ -1,0 +1,260 @@
+2
+mvn archetype:generate -DgroupId=com.example -DartifactId=myapp -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+cd myapp
+mvn compile
+mvn test
+mvn package
+java -cp target/myapp-1.0-SNAPSHOT.jar com.example.App
+----------------------------------------------------------------------------------
+3
+gradle init --type java-application
+17
+3
+1
+1
+1
+no
+gradle build 
+gradle run
+----------------------------------------------------------------------------------------
+4
+2nd
+gradle init
+yes
+2
+yes
+task run(type:JavaExec){
+    main = 'com.example.App'
+    classpath = sourceSets.main.runtimeClasspath
+}
+gradle build
+gradle run
+-----------------------------------------------------------------------------------------------
+6
+new repo
+4>myapp>cmd
+git init
+git add .
+git commit -m"s"
+copy paste(git hub last 2 lines of 1st para)
+to do if error occurs
+{git config --global user.email"ur email"
+git config --global user.name"ur name"
+now again copy paste(git hub last 2 lines of 1st para) }
+in git refresh and copy p6>code>hhtps code copy
+Jenkins dashboard>new itemsp6>freestyle>ok
+paste source code git url
+credentials>add>jenkins>username and password
+trigger>poll scm> H/5 * * * *
+environment>del workspace
+build steps>add build steps>invoke top-level ma>goals>clean compile test package
+add build step>execute win batch>java -cp target/myapp-1.0-SNAPSHOT.jar com.example.App
+save
+build now
+#1>console output>hello world
+H/5 * * * *
+clean compile test package
+java -cp target/myapp-1.0-SNAPSHOT.jar com.example.App
+----------------------------------------------------------------------------------------------
+7
+direct cmd
+wsl --install(if already there type wsl or wsl -d Ubuntu) best case wsl --unregister Ubuntu
+user name Anshul
+pass anshul
+nano inventory
+sudo apt update
+sudo apt install ansible -y
+ansible --version
+nano inventory
+
+[local]
+localhost ansible_connection=local
+(ctrl o enter ctrl x)
+nano playbook.yml
+- name: EXP7 Run on Localhost
+  hosts: local
+  tasks:
+    - name: Say hi
+      debug:
+        msg: "hi"
+(ctrl o enter ctrl x)
+ansible-playbook -i inventory playbook.yml
+------------------------------------------------------------------------------------------
+8
+download>8(copy path)
+open ubuntu
+cd /mnt/paste path(edit it)
+mvn archetype:generate -DgroupId=com.example -DartifactId=myapp -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+cd myapp
+sudo apt update
+sudo apt install openjdk-17-jdk
+nano ~/.bashrc
+
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
+
+source ~/.bashrc
+java -version
+echo $JAVA_HOME
+
+mvn archetype:generate -DgroupId=com.example -DartifactId=myapp -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+cd myapp
+nano inventory
+[local]
+localhost ansible_connection=local
+
+nano playbook.yml
+
+- name: Run Maven Build and Execute App
+  hosts: local
+  tasks:
+    - name: Print hai
+      debug:
+        msg: "hai ansible"
+
+    - name: Ensure Maven is available
+      command: mvn --version
+      environment:
+        JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+
+    - name: Build Maven Project
+      command: mvn clean install
+      args:
+        chdir: /mnt/d/pp8/myapp
+      environment:
+        JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+
+    - name: Run Maven-built JAR
+      command: java -jar target/myapp-1.0-SNAPSHOT.jar
+      args:
+        chdir: /mnt/d/pp8/myapp
+      environment:
+        JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+      register: jar_output
+
+    - name: Show JAR Output
+      debug:
+        var: jar_output.stdout
+(in this code only change the location in chdir: /mnt/(location)/myapp in all chdir)
+ctrl 0 enter ctrl x
+
+nano pom.xml
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mvncmd.example</groupId>
+    <artifactId>myapp</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>myapp</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Compiler plugin specifying Java version -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                </configuration>
+            </plugin>
+
+            <!-- JAR plugin to add main class in manifest -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.example.App</mainClass> <!-- Change this -->
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
+mvn clean package
+java -jar target/myapp-1.0-SNAPSHOT
+
+Jenkins login
+new item p8 freestyle ok
+build step>execute win batch cmd>code paste and (change the address of the located document again like 2 times only)
+wsl ansible-playbook -i /mnt/d/pgm8/myapp/inventory /mnt/d/pgm8/myapp/playbook.yml
+save
+build now
+-------------------------------------------------------------------------------------------------------
+9
+assure login
+search:organization(assure devops)
+my assure organization
+continue
+done
+-----------------------------------------------------------------------------------------------------------
+10
+after prog 9 then
+create new organization
+continue
+private create project
+pipelines>create pipeline
+GitHub only then authorize
+select p6
+approve and install
+config maven
+save and run
+save and run
+done
+
+
+
+trigger:
+  - main
+
+pool:
+  name: 'MyLocalPool'  # Self-hosted agent
+
+steps:
+  - checkout: self
+    displayName: 'Checkout Code from GitHub'
+
+  - script: mvn clean test
+    displayName: 'Build and Run Unit Tests'
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFiles: '**/target/surefire-reports/TEST-*.xml'
+      testResultsFormat: 'JUnit'
+      failTaskOnMissingResultsFile: true
+    displayName: 'Publish Maven Test Results'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: 'target'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
+    displayName: 'Publish Build Artifacts'
+
+
+
